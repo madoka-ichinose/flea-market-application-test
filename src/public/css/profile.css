@@ -1,0 +1,100 @@
+.profile-form__content {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+.profile-form__heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-form__heading h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.form__group {
+    margin-bottom: 20px;
+}
+
+.form__label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.form__input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.form__error {
+    margin-top: 4px;
+    color: #e74c3c;
+    font-size: 14px;
+}
+
+/* プロフィール画像部分 */
+.form__image-wrapper {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.form__image-label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.form__image-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.form__image-button:hover {
+    background-color: #2980b9;
+}
+
+/* 更新ボタン */
+.form__button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.form__button-submit {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form__button-submit:hover {
+    background-color: #27ae60;
+}

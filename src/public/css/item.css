@@ -1,0 +1,91 @@
+.item-container {
+    display: flex;
+    padding: 20px;
+    gap: 40px;
+}
+
+.item-image img {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.brand-name {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.icons {
+    margin-bottom: 15px;
+}
+
+.purchase-button {
+    background-color: #FF6B6B;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.section {
+    margin-top: 30px;
+}
+
+.category-tag {
+    background-color: #eee;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.comment {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.comment-user {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-body {
+    font-size: 14px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.comment-button {
+    background-color: #FF6B6B;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
