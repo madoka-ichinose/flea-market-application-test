@@ -47,4 +47,19 @@ class Product extends Model
     {
     return $this->is_sold;
     }
+
+    public function seller()
+    {
+    return $this->belongsTo(User::class, 'seller_id');
+    }
+
+    public function buyer()
+    {
+    return $this->belongsTo(User::class, 'buyer_id');
+    }
+
+    public function isFavoritedBy($user)
+    {
+    return $this->favorites()->where('user_id', $user->id)->exists();
+    }
 }

@@ -10,16 +10,14 @@
     <h2>プロフィール設定</h2>
   </div>
 
-  <form action="/mypage/profile" method="POST" enctype="multipart/form-data" class="form">
+  <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="form">
     @csrf
-    @method('POST')
-
     <!-- プロフィール画像 -->
     <div class="form__group">
       <div class="form__image-wrapper">
-        <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('images/default.png') }}" alt="プロフィール画像" class="profile-image">
+        <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('images/default.png') }}" alt="プロフィール画像" class="profile-image" id="preview">
         <label class="form__image-label">
-          <input type="file" name="profile_image" style="display: none;">
+          <input type="file" name="profile_image" style="display: none;" onchange="previewImage(this)">
           <span class="form__image-button">画像を選択する</span>
         </label>
       </div>
@@ -36,9 +34,9 @@
 
     <!-- 郵便番号 -->
     <div class="form__group">
-      <label for="postcode" class="form__label">郵便番号</label>
-      <input type="text" name="postcode" id="postcode" value="{{ old('postcode') }}" class="form__input">
-      @error('postcode')
+      <label for="postal_code" class="form__label">郵便番号</label>
+      <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code') }}" class="form__input">
+      @error('postal_code')
       <div class="form__error">{{ $message }}</div>
       @enderror
     </div>
@@ -67,4 +65,18 @@
     </div>
   </form>
 </div>
+@endsection
+
+@section('js')
+<script>
+  function previewImage(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById('preview').src = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
 @endsection

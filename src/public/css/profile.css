@@ -2,9 +2,6 @@
     max-width: 600px;
     margin: 40px auto;
     padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     font-family: "Helvetica Neue", sans-serif;
 }
 
@@ -50,7 +47,7 @@
     margin-bottom: 20px;
 }
 
-.profile-image {
+.form__image-wrapper img {
     width: 120px;
     height: 120px;
     object-fit: cover;
@@ -67,25 +64,28 @@
 .form__image-button {
     display: inline-block;
     padding: 8px 16px;
-    background-color: #3498db;
-    color: #fff;
+    background-color: #fff;
+    color: #ff0000;
+    border: 1px solid #ff0000;
     border-radius: 6px;
     font-size: 14px;
     transition: background-color 0.3s ease;
 }
 
 .form__image-button:hover {
-    background-color: #2980b9;
+    background-color: #fff;
 }
 
 /* 更新ボタン */
 .form__button {
     text-align: center;
     margin-top: 30px;
+    background: #ff0000;
+    transition: background-color 0.3s ease;
 }
 
 .form__button-submit {
-    background-color: #2ecc71;
+    background-color: #ff0000;
     color: #fff;
     border: none;
     padding: 12px 30px;
@@ -96,5 +96,9 @@
 }
 
 .form__button-submit:hover {
-    background-color: #27ae60;
+    background-color: #e74c3c;
+}
+
+.form__button:hover {
+    background-color: #e74c3c;
 }

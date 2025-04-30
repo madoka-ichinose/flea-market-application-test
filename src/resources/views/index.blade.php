@@ -7,6 +7,9 @@
 
 @section('content')
 <div class="container">
+    @if (session('status'))
+    <div style="color: red;">{{ session('status') }}</div>
+    @endif
     <div>
         <span class="tab {{ $tab == 'product' ? 'active' : '' }}" onclick="switchTab('product')">おすすめ</span>
         <span class="tab {{ $tab == 'favorites' ? 'active' : '' }}" onclick="switchTab('favorites')">マイリスト</span>

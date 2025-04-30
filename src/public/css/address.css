@@ -1,0 +1,56 @@
+.address-form-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 24px;
+}
+
+.form-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.success-message {
+    color: #16a34a;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.form-actions {
+    text-align: center;
+}
+
+.form-actions button {
+    background-color: #ff0000;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-actions button:hover {
+    background-color: #ff6B6B;
+}

@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function edit()
-    {
+    public function edit(Request $request){
         return view('profile');
     }
 
@@ -19,9 +18,9 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'postcode' => 'required|string|max:10',
+            'postal_code' => 'required|string|max:10',
             'address' => 'required|string|max:255',
-            'building' => 'required|string|max:255',
+            'building' => 'nullable|string|max:255',
             'profile_image' => 'nullable|image|max:2048',
         ]);
 
@@ -31,12 +30,13 @@ class ProfileController extends Controller
         }
 
         $user->name = $validated['name'];
-        $user->postcode = $validated['postcode'] ?? null;
+        $user->postal_code = $validated['postal_code'] ?? null;
         $user->address = $validated['address'] ?? null;
         $user->building = $validated['building'] ?? null;
+
         $user->save();
 
-        return redirect()->route('/')->with('status', 'プロフィールを更新しました');
+        return redirect('/')->with('status', '※プロフィールを更新しました');
     }
 }
 

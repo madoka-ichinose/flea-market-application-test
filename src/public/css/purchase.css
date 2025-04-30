@@ -1,0 +1,112 @@
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.product-info img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.product-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.summary {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.summary p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.shipping {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+    position: relative;
+}
+
+.shipping h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.shipping p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.shipping a {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.shipping a:hover {
+    text-decoration: underline;
+}
+
+.btn-danger {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #ff5a5f;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #e14b4f;
+}

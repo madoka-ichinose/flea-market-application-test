@@ -12,7 +12,7 @@ class CommentController extends Controller
     public function store(Request $request, $product_id)
     {
         $request->validate([
-            'content' => 'required|string|max:1000',
+            'content' => 'required|string|max:255',
         ]);
 
         $comment = new Comment();
@@ -21,6 +21,6 @@ class CommentController extends Controller
         $comment->content = $request->content;
         $comment->save();
 
-        return redirect()->back()->with('success', 'コメントを投稿しました！');
+        return redirect()->route('products.show', ['product_id' => $product_id])->with('success', 'コメントを投稿しました');
     }
 }
