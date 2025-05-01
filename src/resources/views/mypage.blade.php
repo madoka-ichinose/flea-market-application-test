@@ -25,8 +25,8 @@
         <div class="product-list">
             @foreach ($sellingProducts as $product)
                 <div class="product-item">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                    <p>{{ $product->name }}</p>
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}">
+                    <p>{{ $product->product_name }}</p>
                 </div>
             @endforeach
         </div>
@@ -36,8 +36,8 @@
         <div class="product-list">
             @foreach ($boughtProducts as $product)
                 <div class="product-item">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                    <p>{{ $product->name }}</p>
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}">
+                    <p>{{ $product->product_name }}</p>
                 </div>
             @endforeach
         </div>

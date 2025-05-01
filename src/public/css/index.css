@@ -59,3 +59,21 @@
     text-align: center;
     margin: 20px 0;
 }
+
+.sold-tag {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.image-wrapper {
+    position: relative;
+}

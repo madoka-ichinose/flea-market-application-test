@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\Purchase;
 
 class MypageController extends Controller
 {
@@ -14,8 +15,16 @@ class MypageController extends Controller
         
         $sellingProducts = Product::where('seller_id', $user->id)->get();
 
-        $boughtProducts = Product::where('buyer_id', $user->id)->get();
+        $boughtProducts = Purchase::where('buyer_id', $user->id)
+            ->with('product')
+            ->get()
+            ->pluck('product')
+            ->filter();
 
-        return view('mypage', compact('user', 'sellingProducts', 'boughtProducts'));
+        return view('mypage', [
+            'user' => $user,
+            'sellingProducts' => $sellingProducts,
+            'boughtProducts' => $boughtProducts,
+        ]);
     }
 }

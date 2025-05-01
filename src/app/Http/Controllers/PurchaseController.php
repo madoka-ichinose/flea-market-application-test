@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Delivery;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
@@ -30,32 +31,54 @@ class PurchaseController extends Controller
         if ($method === 'card') {
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'jpy',
-                    'product_data' => [
-                        'name' => $product->name,
-                    ],
-                    'unit_amount' => $product->price,
-                ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => route('home') . '?success=true',
-            'cancel_url' => route('home') . '?canceled=true',
-        ]);
+        $session = \Stripe\Checkout\Session::create([
+        'payment_method_types' => ['card'],
+        'line_items' => [[
+        'price_data' => [
+            'currency' => 'jpy',
+            'unit_amount' => $product->price,
+            'product_data' => [
+                'name' => $product->product_name,
+            ],
+        ],
+        'quantity' => 1,
+    ]],
+        'mode' => 'payment',
+        'success_url' => route('purchase.complete', $product->id),
+        'cancel_url' => route('purchase.show', $product->id),
+]);
 
         return redirect($session->url);
      }
 
         if ($method === 'convenience') {
-        return redirect()->route('convenience.show');
-        }
-
+        $this->completePurchase($product);
+        return redirect()->route('mypage')->with('success', '購入が完了しました');
+    }
         return back()->with('error', '支払い方法を選択してください');
     }
+
+    public function complete($product_id)
+{
+    $product = Product::findOrFail($product_id);
+
+    $this->completePurchase($product);
+
+    return redirect()->route('mypage')->with('success', '購入が完了しました');
+}
+
+    private function completePurchase($product)
+{
+    if (!$product->is_sold) {
+        Purchase::create([
+            'buyer_id'    => Auth::id(),
+            'product_id' => $product->id,
+        ]);
+
+        $product->is_sold = true;
+        $product->save();
+    }
+}
 
     public function editAddress($product_id)
     {

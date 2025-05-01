@@ -39,6 +39,9 @@
                 <div class="product-card">
                   <a href="{{ url('/item/' . $favorite->product->id) }}">
                     <img src="{{ asset('storage/' . $favorite->product->image) }}" alt="商品画像">
+                    @if ($product->is_sold)
+                    <span class="sold-tag">Sold</span>
+                    @endif
                     <div>{{ $favorite->product->product_name }}</div>
                   </a>
                 </div>

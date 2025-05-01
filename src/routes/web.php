@@ -25,12 +25,14 @@ Route::middleware('auth')->group(function () {
      Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
      Route::post('/order', [OrderController::class, 'create'])->name('order.create');
      Route::post('/comment/store/{product_id}', [CommentController::class, 'store'])->name('comment.store');
-     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
+     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
     
     Route::get('/address/edit/{product}', [AddressController::class, 'edit'])->name('address.edit');
 
     Route::get('/purchase/address/{product_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
     Route::post('/purchase/address/{product_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
+
+    Route::get('/purchase/complete/{product}', [PurchaseController::class, 'complete'])->name('purchase.complete');
  });
 
     Route::get('/purchase/{product}', [PurchaseController::class, 'show'])
