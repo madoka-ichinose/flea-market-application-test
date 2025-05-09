@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+<link rel="stylesheet" href="{{ asset('css/common.css') }}">
 @endsection
 
 @section('content')
@@ -12,7 +13,7 @@
 
   <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="form">
     @csrf
-    <!-- プロフィール画像 -->
+    
     <div class="form__group">
       <div class="form__image-wrapper">
         <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('images/default.png') }}" alt="プロフィール画像" class="profile-image" id="preview">
@@ -23,7 +24,6 @@
       </div>
     </div>
 
-    <!-- ユーザー名 -->
     <div class="form__group">
       <label for="name" class="form__label">ユーザー名</label>
       <input type="text" name="name" id="name" value="{{ old('name', Auth::user()->name) }}" class="form__input">
@@ -32,7 +32,6 @@
       @enderror
     </div>
 
-    <!-- 郵便番号 -->
     <div class="form__group">
       <label for="postal_code" class="form__label">郵便番号</label>
       <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code') }}" class="form__input">
@@ -41,7 +40,6 @@
       @enderror
     </div>
 
-    <!-- 住所 -->
     <div class="form__group">
       <label for="address" class="form__label">住所</label>
       <input type="text" name="address" id="address" value="{{ old('address') }}" class="form__input">
@@ -50,7 +48,6 @@
       @enderror
     </div>
 
-    <!-- 建物名 -->
     <div class="form__group">
       <label for="building" class="form__label">建物名</label>
       <input type="text" name="building" id="building" value="{{ old('building') }}" class="form__input">
@@ -59,7 +56,6 @@
       @enderror
     </div>
 
-    <!-- 更新ボタン -->
     <div class="form__button">
       <button type="submit" class="form__button-submit">更新する</button>
     </div>

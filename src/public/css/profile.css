@@ -102,3 +102,53 @@
 .form__button:hover {
     background-color: #e74c3c;
 }
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .profile-form__content {
+        padding: 20px;
+    }
+
+    .form__image-wrapper img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .form__input {
+        font-size: 15px;
+        padding: 9px 10px;
+    }
+
+    .form__image-button,
+    .form__button-submit {
+        font-size: 15px;
+        padding: 10px 24px;
+    }
+}
+
+@media (max-width: 767px) {
+    .profile-form__content {
+        padding: 15px;
+        margin: 20px 10px;
+    }
+
+    .profile-form__heading h2 {
+        font-size: 20px;
+    }
+
+    .form__image-wrapper img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .form__input {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    .form__image-button,
+    .form__button-submit {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+    }
+}

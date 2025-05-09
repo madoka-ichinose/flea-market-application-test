@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/common.css') }}">
 
 @endsection
 
@@ -26,7 +27,7 @@
                     <span class="sold-tag">Sold</span>
                     @endif
                   </div>
-                    <div>{{ $product->product_name }}</div>
+                    <div class="product-name">{{ $product->product_name }}</div>
                  </a>
                 </div>
             @endforeach
@@ -35,17 +36,22 @@
 
     <div id="favorites-list" style="{{ $tab == 'favorites' ? '' : 'display:none;' }}">
         <div class="product-grid">
-            @foreach($favorites as $favorite)
-                <div class="product-card">
-                  <a href="{{ url('/item/' . $favorite->product->id) }}">
-                    <img src="{{ asset('storage/' . $favorite->product->image) }}" alt="商品画像">
-                    @if ($product->is_sold)
-                    <span class="sold-tag">Sold</span>
-                    @endif
-                    <div>{{ $favorite->product->product_name }}</div>
-                  </a>
-                </div>
-            @endforeach
+           @foreach($favorites as $favorite)
+                @php $product = $favorite->product; @endphp
+                @if ($product)
+                    <div class="product-card">
+                        <a href="{{ url('/item/' . $product->id) }}">
+                        <div class="image-wrapper">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="商品画像">
+                        @if ($product->is_sold)
+                        <span class="sold-tag">Sold</span>
+                        @endif
+                    </div>
+            <div>{{ $product->product_name }}</div>
+        </a>
+    </div>
+    @endif
+@endforeach
         </div>
     </div>
 </div>

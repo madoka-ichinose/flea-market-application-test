@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/purchase/address/{product_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
 
     Route::get('/purchase/complete/{product}', [PurchaseController::class, 'complete'])->name('purchase.complete');
+
+    Route::get('/sell', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/sell', [ProductController::class, 'store'])->name('products.store');
  });
 
     Route::get('/purchase/{product}', [PurchaseController::class, 'show'])

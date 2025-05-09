@@ -13,7 +13,7 @@ class MypageController extends Controller
     {
         $user = Auth::user();
         
-        $sellingProducts = Product::where('seller_id', $user->id)->get();
+        $sellingProducts = Product::where('user_id', $user->id)->get();
 
         $boughtProducts = Purchase::where('buyer_id', $user->id)
             ->with('product')
