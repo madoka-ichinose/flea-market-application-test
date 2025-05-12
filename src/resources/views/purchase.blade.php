@@ -27,6 +27,15 @@
                     <option value="convenience">コンビニ支払い</option>
                     <option value="card">カード支払い</option>
                 </select>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                         @endforeach
+                    </ul>
+                </div>
+                @endif
             </div>
 
             @php
@@ -46,7 +55,6 @@
                 @endif
                 <a href="{{ route('purchase.address.edit', $product->id) }}">変更する</a>
             </div>
-        </form>
     </div>
 
     <div class="purchase-summary">
@@ -56,6 +64,7 @@
         </div>
         <button type="submit" class="btn-danger">購入する</button>
     </div>
+    </form>
 </div>
 
 <script>

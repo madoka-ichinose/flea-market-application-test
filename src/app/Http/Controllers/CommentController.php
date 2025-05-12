@@ -6,15 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, $product_id)
+    public function store(CommentRequest $request, $product_id)
     {
-        $request->validate([
-            'content' => 'required|string|max:255',
-        ]);
-
         $comment = new Comment();
         $comment->product_id = $product_id;
         $comment->user_id = Auth::id(); 

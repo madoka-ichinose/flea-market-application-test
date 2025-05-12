@@ -63,6 +63,15 @@
 
         <div class="section">
             <h2>商品へのコメント</h2>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                 @endforeach
+                </ul>
+            </div>
+            @endif
             <form action="{{ route('comment.store', ['product_id' => $product->id]) }}" method="POST">
                 @csrf
                 <textarea name="content" placeholder="コメントを入力する" required></textarea>

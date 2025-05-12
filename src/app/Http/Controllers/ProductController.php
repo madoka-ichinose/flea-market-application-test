@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Favorite;
 use App\Models\Category;
+use App\Http\Requests\SellRequest;
 
 class ProductController extends Controller
 {
@@ -57,33 +58,25 @@ class ProductController extends Controller
         return view('products.create', compact('categories'));
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'image' => 'required|image',
-            'categories' => 'required|string',
-            'condition' => 'required|in:良好,目立った傷や汚れなし,やや傷や汚れあり,状態が悪い',
-            'product_name' => 'required|string|max:255',
-            'brand' => 'nullable|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|integer|min:0',
-        ]);
+   public function store(SellRequest $request)
+{
+    $validated = $request->validated();
 
-        $path = $request->file('image')->store('images', 'public');
+    $path = $request->file('image')->store('images', 'public');
 
-        $product = Product::create([
-        'image' => $path,
-        'condition' => $validated['condition'],
+    $product = Product::create([
+        'image'        => $path,
+        'condition'    => $validated['condition'],
         'product_name' => $validated['product_name'],
-        'brand' => $validated['brand'],
-        'description' => $validated['description'],
-        'price' => $validated['price'],
-        'user_id' => auth()->id(),
-        ]);
+        'brand'        => $validated['brand'] ?? null,
+        'description'  => $validated['description'],
+        'price'        => $validated['price'],
+        'user_id'      => auth()->id(),
+    ]);
 
-        $categoryIds = explode(',', $validated['categories']);
-        $product->categories()->attach($categoryIds);
+    $categoryIds = explode(',', $validated['categories']);
+    $product->categories()->attach($categoryIds);
 
-        return redirect()->route('mypage')->with('success', '商品が出品されました');
-    }
+    return redirect()->route('mypage')->with('success', '商品が出品されました');
+}
 }

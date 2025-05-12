@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MypageController;
@@ -23,7 +22,7 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
 Route::middleware('auth')->group(function () {
      Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
      Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
-     Route::post('/order', [OrderController::class, 'create'])->name('order.create');
+     
      Route::post('/comment/store/{product_id}', [CommentController::class, 'store'])->name('comment.store');
      Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
     

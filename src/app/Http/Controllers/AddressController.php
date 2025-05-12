@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Delivery;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AddressRequest;
 
 class AddressController extends Controller
 {
@@ -13,7 +14,6 @@ class AddressController extends Controller
 {
     $user = Auth::user();
 
-    // 既に配送先がある場合は取得
     $delivery = Delivery::firstOrNew([
         'user_id' => $user->id,
         'product_id' => $product->id,
@@ -26,13 +26,9 @@ class AddressController extends Controller
     return view('purchase.address', compact('user', 'product', 'delivery'));
 }
 
-public function update(Request $request, Product $product)
+public function update(AddressRequest $request, Product $product)
 {
-    $request->validate([
-        'postal_code' => 'required|string|max:10',
-        'address' => 'required|string|max:255',
-        'building' => 'nullable|string|max:255',
-    ]);
+    $validated = $request->validated();
 
     Delivery::updateOrCreate(
         [

@@ -13,6 +13,16 @@
         <p style="color:green;">{{ session('success') }}</p>
     @endif
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -22,6 +32,9 @@
         <input type="file" name="image" id="imageInput" required>
         </label>
         <div id="imagePreview" class="image-preview"></div>
+        @error('image')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
 
         <h3>商品の詳細</h3>
 
@@ -33,30 +46,53 @@
             </button>
         @endforeach
         </div>
-        <input type="hidden" name="categories" id="selected-categories">
+        <input type="hidden" name="categories" id="selected-categories" value="{{ old('categories') }}">
+        @error('categories')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
         <br><br>
 
         <label>商品の状態</label><br>
         <select name="condition" required>
             <option value="">選択してください</option>
             @foreach(['良好','目立った傷や汚れなし','やや傷や汚れあり','状態が悪い'] as $condition)
-                <option value="{{ $condition }}">{{ $condition }}</option>
+                <option value="{{ $condition }}" {{ old('condition') == $condition ? 'selected' : '' }}>{{ $condition }}</option>
             @endforeach
-        </select><br><br>
+        </select>
+        @error('condition')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br><br>
 
         <h3>商品名と説明</h3>
 
         <label>商品名</label><br>
-        <input type="text" name="product_name" required><br><br>
+        <input type="text" name="product_name" value="{{ old('product_name') }}">
+        @error('product_name')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br><br>
 
         <label>ブランド名</label><br>
-        <input type="text" name="brand"><br><br>
+        <input type="text" name="brand" value="{{ old('brand') }}">
+        @error('brand')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br><br>
 
         <label>商品説明</label><br>
-        <textarea name="description" required></textarea><br><br>
+        <textarea name="description">{{ old('description') }}</textarea>
+        @error('description')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br><br>
 
         <label>販売価格（¥）</label><br>
-        <input type="number" name="price" min="0" required><br><br>
+        <input type="number" name="price" min="0" value="{{ old('price') }}">
+        @error('price')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br><br>
 
         <button type="submit">出品する</button>
     </form>
@@ -69,7 +105,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll('.category-btn');
     const selectedCategoriesInput = document.getElementById('selected-categories');
 
+    let selectedCategories = Array.from(selectedCategoriesInput.value.split(',')).filter(Boolean);
     buttons.forEach(button => {
+        if (selectedCategories.includes(String(button.getAttribute('data-id')))) {
+    button.classList.add('selected');
+}
+
         button.addEventListener('click', function() {
             const categoryId = this.getAttribute('data-id');
             this.classList.toggle('selected');  
@@ -84,9 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
             selectedCategoriesInput.value = selectedCategories.join(',');
         });
     });
-});
 
-document.addEventListener("DOMContentLoaded", function() {
     const imageInput = document.getElementById('imageInput');
     const imagePreview = document.getElementById('imagePreview');
 
@@ -102,26 +141,6 @@ document.addEventListener("DOMContentLoaded", function() {
             imagePreview.innerHTML = '';
         }
     });
-
-    const buttons = document.querySelectorAll('.category-btn');
-    const selectedCategoriesInput = document.getElementById('selected-categories');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            const categoryId = this.getAttribute('data-id');
-            this.classList.toggle('selected');  
-            let selectedCategories = Array.from(selectedCategoriesInput.value.split(',')).filter(Boolean);
-            
-            if (this.classList.contains('selected')) {
-                selectedCategories.push(categoryId);
-            } else {
-                selectedCategories = selectedCategories.filter(id => id !== categoryId);
-            }
-
-            selectedCategoriesInput.value = selectedCategories.join(',');
-        });
-    });
 });
-
 </script>
 @endsection

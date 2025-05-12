@@ -54,3 +54,11 @@
 .form-actions button:hover {
     background-color: #ff6B6B;
 }
+
+.error-message {
+    color: #ff0000;
+    background-color: #ffe5e5;
+    border: 1px solid red;
+    padding: 5px;
+    border-radius: 5px;
+}

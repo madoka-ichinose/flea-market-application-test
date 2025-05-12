@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -52,9 +53,9 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
-        // Fortify::afterRegister(function (Request $request, $user) {
-        // return redirect('/mypage/profile');
-        // });
+        Validator::extend('comment_valid', function ($attribute, $value, $parameters, $validator) {
+        return is_string($value) && mb_strlen($value) <= 255;
+    }, 'コメントは255文字以内で入力してください。');
         
     }
 }

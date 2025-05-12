@@ -1,6 +1,6 @@
 # フリマアプリ
 
-- ユーザーは商品の出品・購入ができ、お気に入り登録機能も備えたLaravelアプリケーションです。  
+- 商品の出品・購入ができ、お気に入り登録機能も備えたLaravelアプリケーションです。  
 
 ## 主な機能
 
@@ -35,30 +35,75 @@
 
 ## ビューの作成  
 
-- 
+- index.blade.php(商品一覧のトップページ)
+- item.blade.php（商品詳細画面）
+- mypage.blade.php（出品した商品、購入した商品が確認できる）
+- profile.blade.php（プロフィール編集画面）
+- purchase.blade.php（商品購入画面）
+- purchase/address.blade.php（配送先変更画面）
+- products/create.blade.php（商品出品画面）
+- login.blade.php（ログイン画面）
+- register.blade.php（会員登録画面）
 
 ## コントローラー設定  
 
 - docker-compose exec php bash
-- php artisan make:controller ItemController
-- php artisan make:controller AuthAuthController
-- php artisan make:controller UserController
-- コントローラにアクション追加
+- php artisan make:controller ProductController
+- php artisan make:controller PurchasePurchaseController
+- php artisan make:controller MypageController
+- php artisan make:controller ProfileProfileController
+- コントローラにそれぞれアクション追加
 - ルーティング設定（web.php）
 - php artisan key:generate
   
 ## テーブル作成（マイグレーション）  
 
-- php artisan make:migration create_〇〇_table
+- php artisan make:migration create_categories_table
 - マイグレーションファイルに記述追加（カラムの設定）
 - php artisan migrate
-- php artisan make:model 〇〇
+- php artisan make:model Category
+- php artisan make:migration create_comments_table
+- マイグレーションファイルに記述追加（カラムの設定）
+- php artisan migrate
+- php artisan make:model Comment
+- php artisan make:migration create_deliveries_table
+- マイグレーションファイルに記述追加（カラムの設定）
+- php artisan migrate
+- php artisan make:model Delivery
+- php artisan make:migration create_favorites_table
+- マイグレーションファイルに記述追加（カラムの設定）
+- php artisan migrate
+- php artisan make:model Favorite
+- php artisan make:migration create_products_table
+- マイグレーションファイルに記述追加（カラムの設定）
+- php artisan migrate
+- php artisan make:model Product
+- php artisan make:migration add_profile_columns_to_users_table
+- マイグレーションファイルに記述追加（カラムの設定）
+- php artisan migrate
+- php artisan make:migration create_purchase_table
+- マイグレーションファイルに記述追加（カラムの設定）
+- php artisan migrate
+- php artisan make:model Purchase
+- php artisan make:migration create_category_product_table
+- マイグレーションファイルに記述追加（カラムの設定）
+- php artisan migrate
 
 ## シーティング  
 
-- php artisan make:seeder 〇〇TableSeeder
-- runメソッドに〇〇テーブルのシードを作成する処理を記載
-- DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(〇〇TableSeeder::class);
+- php artisan make:seeder CategoriesTableSeeder
+- runメソッドにCategoryテーブルのシードを作成する処理を記載
+- DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(CategoriesTableSeeder::class);
+- php artisan db:seed
+  
+- php artisan make:seeder ProductsTableSeeder
+- runメソッドにProductテーブルのシードを作成する処理を記載
+- DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(ProductsTableSeeder::class);
+- php artisan db:seed
+  
+-  php artisan make:seeder UsersTableSeeder
+- runメソッドにUserテーブルのシードを作成する処理を記載
+- DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(UsersTableSeeder::class);
 - php artisan db:seed
 
 ## 使用技術(実行環境)  
@@ -70,6 +115,8 @@
 - Docker / Docker Compose
 - Bootstrap 5.3
 - Bladeテンプレートエンジン
+- Fortify
+- stripe/stripe-php
 
 ## ER図  
 

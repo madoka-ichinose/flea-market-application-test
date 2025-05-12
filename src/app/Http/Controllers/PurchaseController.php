@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -23,7 +24,7 @@ class PurchaseController extends Controller
     ]);
     }
 
-    public function pay(Request $request)
+    public function pay(PurchaseRequest $request)
     {
         $product = Product::findOrFail($request->product_id);
         $method = $request->payment_method;

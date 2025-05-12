@@ -88,6 +88,15 @@ textarea {
     margin-bottom: 10px;
 }
 
+.alert {
+    color: red;
+    background-color: #ffe5e5;
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
 .comment-button {
     background-color: #FF6B6B;
     color: white;
