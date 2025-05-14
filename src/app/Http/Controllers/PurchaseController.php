@@ -85,10 +85,7 @@ class PurchaseController extends Controller
     {
     $delivery = Delivery::where('product_id', $product_id)->first();
     
-    return view('purchase.address', [
-        'product_id' => $product_id,
-        'delivery' => $delivery,
-    ]);
+    return view('purchase.address', compact('delivery', 'product_id'));
     }
 
     public function updateAddress(Request $request, $product_id)

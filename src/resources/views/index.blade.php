@@ -11,48 +11,62 @@
     @if (session('status'))
     <div style="color: red;">{{ session('status') }}</div>
     @endif
-    <div>
-        <span class="tab {{ $tab == 'product' ? 'active' : '' }}" onclick="switchTab('product')">おすすめ</span>
-        <span class="tab {{ $tab == 'favorites' ? 'active' : '' }}" onclick="switchTab('favorites')">マイリスト</span>
-    </div>
+        <div>
+            <span class="tab {{ $tab == 'product' ? 'active' : '' }}" onclick="switchTab('product')">おすすめ</span>
+            <span class="tab {{ $tab == 'favorites' ? 'active' : '' }}" onclick="switchTab('favorites')">マイリスト</span>
+        </div>
 
-    <div id="product-list" style="{{ $tab == 'product' ? '' : 'display:none;' }}">
-        <div class="product-grid">
+        <div id="product-list" style="{{ $tab == 'product' ? '' : 'display:none;' }}">
+            <div class="product-grid">
             @foreach($products as $product)
                 <div class="product-card">
-                 <a href="{{ url('/item/' . $product->id) }}">
-                  <div class="image-wrapper">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="商品画像">
-                    @if ($product->is_sold)
-                    <span class="sold-tag">Sold</span>
+                    @if (!$product->is_sold)
+                    <a href="{{ url('/item/' . $product->id) }}">
                     @endif
-                  </div>
-                    <div class="product-name">{{ $product->product_name }}</div>
-                 </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
 
-    <div id="favorites-list" style="{{ $tab == 'favorites' ? '' : 'display:none;' }}">
-        <div class="product-grid">
-           @foreach($favorites as $favorite)
-                @php $product = $favorite->product; @endphp
-                @if ($product)
-                    <div class="product-card">
-                        <a href="{{ url('/item/' . $product->id) }}">
-                        <div class="image-wrapper">
+                    <div class="image-wrapper">
                         <img src="{{ asset('storage/' . $product->image) }}" alt="商品画像">
                         @if ($product->is_sold)
                         <span class="sold-tag">Sold</span>
                         @endif
                     </div>
-            <div>{{ $product->product_name }}</div>
-        </a>
-    </div>
-    @endif
-@endforeach
+                    <div class="product-name">{{ $product->product_name }}</div>
+
+                    @if (!$product->is_sold)
+                    </a>
+                    @endif
+                </div>
+            @endforeach
+            </div>
         </div>
+
+        <div id="favorites-list" style="{{ $tab == 'favorites' ? '' : 'display:none;' }}">
+            <div class="product-grid">
+            @foreach($favorites as $favorite)
+            @php $product = $favorite->product; @endphp
+            @if ($product)
+                <div class="product-card {{ $product->is_sold ? 'sold' : '' }}">
+                    @if (!$product->is_sold)
+                        <a href="{{ url('/item/' . $product->id) }}">
+                    @endif
+
+                    <div class="image-wrapper">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="商品画像">
+                        @if ($product->is_sold)
+                            <span class="sold-tag">Sold</span>
+                        @endif
+                    </div>
+                    <div class="product-name">{{ $product->product_name }}</div>
+
+                    @if (!$product->is_sold)
+                        </a>
+                    @endif
+                </div>
+            @endif
+            @endforeach
+            </div>
+        </div>
+    </div>
     </div>
 </div>
 @endsection
