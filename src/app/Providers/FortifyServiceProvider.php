@@ -15,15 +15,20 @@ use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Fortify\Contracts\LoginResponse;
+use App\Actions\Fortify\LoginResponse as CustomLoginResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
+use App\Actions\Fortify\RegisterResponse as CustomRegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register()
     {
-        //
+        $this->app->singleton(LoginResponse::class, CustomLoginResponse::class);
+        $this->app->singleton(RegisterResponse::class, CustomRegisterResponse::class);
     }
 
     /**

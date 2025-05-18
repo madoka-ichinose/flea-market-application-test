@@ -27,14 +27,8 @@
                     <option value="convenience">コンビニ支払い</option>
                     <option value="card">カード支払い</option>
                 </select>
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                         @endforeach
-                    </ul>
-                </div>
+                @if ($errors->has('payment_method'))
+                <div class="alert alert-danger">{{ $errors->first('payment_method') }}</div>
                 @endif
             </div>
 
@@ -46,6 +40,10 @@
 
             <div class="shipping">
                 <h4>配送先</h4>
+                @if ($errors->has('address'))
+                <div class="alert alert-danger">{{ $errors->first('address') }}</div>
+                @endif
+
                 @if ($delivery)
                     <p>〒 {{ $delivery->postal_code }}</p>
                     <p>{{ $delivery->address }} {{ $delivery->building }}</p>

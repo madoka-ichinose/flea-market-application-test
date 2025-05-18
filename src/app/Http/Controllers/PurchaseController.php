@@ -29,6 +29,8 @@ class PurchaseController extends Controller
         $product = Product::findOrFail($request->product_id);
         $method = $request->payment_method;
 
+        $user = Auth::user();
+
         if ($method === 'card') {
         Stripe::setApiKey(env('STRIPE_SECRET'));
 

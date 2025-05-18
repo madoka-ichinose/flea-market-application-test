@@ -10,16 +10,19 @@ use App\Http\Controllers\MypageController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\FavoriteController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/search', [ProductController::class, 'index'])->name('products.search');
 Route::get('/item/{product_id}', [ProductController::class, 'show'])->name('products.show');
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware(['guest'])
-    ->name('register');
+// Route::post('/register', [RegisteredUserController::class, 'store'])
+//     ->middleware(['guest'])
+//     ->name('register');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','verified')->group(function () {
      Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
      Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
      
@@ -38,11 +41,28 @@ Route::middleware('auth')->group(function () {
  });
 
     Route::get('/purchase/{product}', [PurchaseController::class, 'show'])
-    ->middleware('auth')
+    ->middleware('auth','verified')
     ->name('purchase.show');
 
     Route::post('/purchase/pay', [PurchaseController::class, 'pay'])
-    ->middleware('auth')
+    ->middleware('auth','verified')
     ->name('purchase.pay');
 
-    Route::post('/favorite/{product}', [FavoriteController::class, 'toggle'])->middleware('auth')->name('favorite.toggle');
+    Route::post('/favorite/{product}', [FavoriteController::class, 'toggle'])->middleware('auth','verified')->name('favorite.toggle');
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+    
+        return back()->with('message', '認証メールを再送信しました。');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    
+    // 認証ページの表示（GET）
+    Route::get('/verify', function () {
+        return view('auth.verify');
+    })->middleware(['auth'])->name('verification.notice');
+    
+    // メール認証処理（GET）
+    Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect('/mypage/profile');
+    })->middleware(['auth', 'signed'])->name('verification.verify');

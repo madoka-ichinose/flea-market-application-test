@@ -21,6 +21,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect('/mypage/profile'); // 登録後は /mypage/profile にリダイレクト！
+        return redirect()->route('verification.notice');
     }
 }

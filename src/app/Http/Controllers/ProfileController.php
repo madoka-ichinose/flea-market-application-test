@@ -10,7 +10,9 @@ use App\Http\Requests\ProfileRequest;
 class ProfileController extends Controller
 {
     public function edit(Request $request){
-        return view('profile');
+        return view('profile', [
+            'user' => Auth::user(),
+        ]);
     }
 
     public function update(ProfileRequest $request)
@@ -29,6 +31,7 @@ class ProfileController extends Controller
         $user->address = $validated['address'] ?? null;
         $user->building = $validated['building'] ?? null;
 
+        $user->profile_completed = true;
         $user->save();
 
         return redirect('/')->with('status', '※プロフィールを更新しました');

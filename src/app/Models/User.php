@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\VerifyEmailJa;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasFactory;
@@ -22,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'postal_code', 'address', 'building', 'profile_image',
+        'postal_code', 'address', 'building', 'profile_image','profile_completed',
     ];
 
     /**
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function purchases()
     {
         return $this->hasMany(Purchase::class, 'buyer_id');
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+    $this->notify(new VerifyEmailJa);
     }
 }

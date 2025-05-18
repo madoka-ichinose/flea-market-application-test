@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,7 +33,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $user = Auth::user();
+
+        // profile_completed に応じて遷移先を変える
+        $redirectTo = $user->profile_completed ? RouteServiceProvider::HOME : '/mypage/profile';
+
+        return app(LoginResponseContract::class)->toResponse($request)->withHeaders([
+            'X-Redirect-To' => $redirectTo
+        ]);
     }
 
     /**
