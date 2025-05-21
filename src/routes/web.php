@@ -18,10 +18,6 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/search', [ProductController::class, 'index'])->name('products.search');
 Route::get('/item/{product_id}', [ProductController::class, 'show'])->name('products.show');
 
-// Route::post('/register', [RegisteredUserController::class, 'store'])
-//     ->middleware(['guest'])
-//     ->name('register');
-
 Route::middleware('auth','verified')->group(function () {
      Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
      Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -56,12 +52,10 @@ Route::middleware('auth','verified')->group(function () {
         return back()->with('message', '認証メールを再送信しました。');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
     
-    // 認証ページの表示（GET）
     Route::get('/verify', function () {
         return view('auth.verify');
     })->middleware(['auth'])->name('verification.notice');
     
-    // メール認証処理（GET）
     Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
         return redirect('/mypage/profile');
