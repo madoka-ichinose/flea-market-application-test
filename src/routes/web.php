@@ -13,8 +13,11 @@ use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\TabController;
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
+Route::get('/tab', [TabController::class, 'show'])->name('tab.show');
+
 Route::get('/search', [ProductController::class, 'index'])->name('products.search');
 Route::get('/item/{product_id}', [ProductController::class, 'show'])->name('products.show');
 

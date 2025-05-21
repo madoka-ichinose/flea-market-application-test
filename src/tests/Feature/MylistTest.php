@@ -18,20 +18,16 @@ public function only_favorited_products_are_displayed_in_mylist()
     {
     $user = User::factory()->create();
 
-    $productA = Product::factory()->create(); // いいねする商品
-    $productB = Product::factory()->create(); // いいねしない商品
+    $productA = Product::factory()->create();
+    $productB = Product::factory()->create();
 
-    // いいねを付与（productA のみ）
     $user->favorites()->attach($productA->id);
 
-    $response = $this->actingAs($user)->get('/?tab=favorites');
+    $response = $this->actingAs($user)->get('/tab?tab=favorites');
 
     $response->assertStatus(200);
 
-    // いいねした商品は表示される
     $response->assertSee($productA->product_name);
-
-    // いいねしてない商品は表示されない
     $response->assertDontSee($productB->product_name);
     }
 
@@ -52,7 +48,7 @@ public function only_favorited_products_are_displayed_in_mylist()
             'product_id' => $soldProduct->id,
         ]);
 
-        $response = $this->actingAs($user)->get('/?tab=favorites');
+        $response = $this->actingAs($user)->get('/tab?tab=favorites');
 
         $response->assertStatus(200);
         $response->assertSee('Sold');
@@ -70,7 +66,7 @@ public function only_favorited_products_are_displayed_in_mylist()
     // 他人の商品にだけいいね
     $user->favorites()->attach($otherProduct->id);
 
-    $response = $this->actingAs($user)->get('/?tab=favorites');
+    $response = $this->actingAs($user)->get('/tab?tab=favorites');
 
     $response->assertStatus(200);
 
@@ -85,8 +81,8 @@ public function only_favorited_products_are_displayed_in_mylist()
     /** @test */
 public function guest_can_access_mylist_but_sees_no_products()
 {
-    $response = $this->get('/?tab=favorites');
+    $response = $this->get('/tab?tab=favorites');
     $response->assertStatus(200);
-    $response->assertDontSee('product-name');
+    $this->assertCount(0, $response->viewData('favorites') ?? []);
 }
 }

@@ -25,18 +25,20 @@ class ProductController extends Controller
         $productsQuery->where('user_id', '!=', auth()->id());
     }
 
-    $products = $productsQuery->latest()->get();
+    $products = $productsQuery->orderBy('is_sold')->latest()->get();
 
     $favorites = auth()->check()
-        ? Favorite::with('product')
-            ->where('user_id', auth()->id())
-            ->whereHas('product', function ($query) use ($keyword) {
-                if ($keyword) {
-                    $query->where('product_name', 'like', '%' . $keyword . '%');
-                }
-            })
-            ->get()
-        : collect();
+    ? Favorite::with('product')
+        ->where('user_id', auth()->id())
+        ->whereHas('product', function ($query) use ($keyword) {
+            $query->where('user_id', '!=', auth()->id()); 
+
+            if ($keyword) {
+                $query->where('product_name', 'like', '%' . $keyword . '%');
+            }
+        })
+        ->get()
+    : collect();
 
     return view('index', compact('products', 'favorites', 'tab'));
     }
