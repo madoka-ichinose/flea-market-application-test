@@ -77,4 +77,66 @@ class ProductTest extends TestCase
             $response->assertSee($product->name);
         }
     }
+
+        /** @test */
+        public function user_can_search_products_by_keyword()
+        {
+            $user = User::factory()->create();
+            $otherUser = User::factory()->create();
+    
+            // 検索にヒットする商品
+            $matchingProduct = Product::factory()->create([
+                'user_id' => $otherUser->id,
+                'product_name' => 'Apple iPhone',
+            ]);
+    
+            // 検索にヒットしない商品
+            $nonMatchingProduct = Product::factory()->create([
+                'user_id' => $otherUser->id,
+                'product_name' => 'Samsung Galaxy',
+            ]);
+    
+            $this->actingAs($user);
+    
+            $response = $this->get('/?keyword=iphone');
+    
+            $response->assertStatus(200);
+            $response->assertSee('Apple iPhone');
+            $response->assertDontSee('Samsung Galaxy');
+        }
+
+        /** @test */
+    public function favorites_tab_displays_filtered_products_by_keyword()
+    {
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+    
+        $productA = Product::factory()->create([
+            'user_id' => $otherUser->id,
+            'product_name' => 'Awesome Product',
+        ]);
+    
+        $productB = Product::factory()->create([
+            'user_id' => $otherUser->id,
+            'product_name' => 'Other Product',
+        ]);
+    
+        $this->actingAs($user);
+    
+        $user->favorites()->attach($productA->id);
+        $user->favorites()->attach($productB->id);
+    
+        $response = $this->get('/tab?tab=favorites&keyword=Awesome');
+    
+        $response->assertStatus(200);
+        $response->assertSee('Awesome Product');
+        $response->assertDontSee('Other Product');
+    
+        // タブのアクティブ状態の確認（より信頼性高く）
+        $this->assertStringContainsString(
+            'class="tab active">マイリスト',
+            $response->getContent()
+        );
+    }
+
 }

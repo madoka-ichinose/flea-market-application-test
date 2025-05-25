@@ -16,21 +16,24 @@
         <p class="brand-name">{{ $product->brand }}</p>
         <p class="price">¥{{ number_format($product->price) }}（税込）</p>
 
-        @auth
-        <div class="icons">
-            <span id="favorite-count">
-                <button id="favorite-button" data-product-id="{{ $product->id }}" 
-                style="border: none; background: none; cursor: pointer;">
-                <i class="fa{{ $product->isFavoritedBy(auth()->user()) ? 's' : 'r' }} fa-star" 
-                id="heart-icon" 
-                style="color: {{ $product->isFavoritedBy(auth()->user()) ? 'gold' : 'gray' }}; font-size: 24px;"></i>
-                </button><span id="favorite-value">{{ $product->favorites_count }}</span>
-            </span>
-        <span>💬{{ $product->comments_count }}</span>
-
         
-        </div>
-        @endauth
+        <div class="icons"> 
+    <span id="favorite-count">
+        @if (auth()->check())
+            <button id="favorite-button" data-product-id="{{ $product->id }}" 
+                    style="border: none; background: none; cursor: pointer;">
+                <i class="fa{{ $product->isFavoritedBy(auth()->user()) ? 's' : 'r' }} fa-star" 
+                   id="heart-icon" 
+                   style="color: {{ $product->isFavoritedBy(auth()->user()) ? 'gold' : 'gray' }}; font-size: 24px;"></i>
+            </button>
+        @else
+            <i class="far fa-star" style="color: gray; font-size: 24px;"></i>
+        @endif
+        <span id="favorite-value">{{ $product->favorites_count }}</span>
+    </span>
+    <span>💬{{ $product->comments_count }}</span>
+</div>
+        
         @auth
             <a href="{{ route('purchase.show', $product->id) }}" class="purchase-button">購入手続きへ</a>
         @else
@@ -74,7 +77,7 @@
             @endif
             <form action="{{ route('comment.store', ['product_id' => $product->id]) }}" method="POST">
                 @csrf
-                <textarea name="content" placeholder="コメントを入力する" required></textarea>
+                <textarea name="content" placeholder="コメントを入力する" ></textarea>
                 <button type="submit" class="comment-button">コメントを投稿する</button>
             </form>
         </div>

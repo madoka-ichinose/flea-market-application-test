@@ -26,6 +26,7 @@ Route::middleware('auth','verified')->group(function () {
      Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
      
      Route::post('/comment/store/{product_id}', [CommentController::class, 'store'])->name('comment.store');
+     
      Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
     
     Route::get('/address/edit/{product}', [AddressController::class, 'edit'])->name('address.edit');

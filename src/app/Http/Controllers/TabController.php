@@ -11,29 +11,42 @@ class TabController extends Controller
     public function show(Request $request)
     {
         $tab = $request->input('tab', 'product');
-
-        $products = collect();  // 初期化
+        $keyword = $request->input('keyword');
+    
+        $products = collect();
         $favorites = collect();
-
+    
         if ($tab === 'product') {
-            // 「おすすめ」：自分の出品以外の全商品
-            $products = Product::when(auth()->check(), function ($query) {
-                return $query->where('user_id', '!=', auth()->id());
-            })->orderBy('is_sold')->latest()->get();
-
-        } elseif ($tab === 'favorites') {
-            // 「マイリスト」：お気に入り商品のうち、自分の出品以外
+            $productsQuery = Product::query();
+    
+            // 自分の商品を除外
             if (auth()->check()) {
-                $favorites = Favorite::with('product')
+                $productsQuery->where('user_id', '!=', auth()->id());
+            }
+    
+            // 検索キーワードがある場合のみ検索条件を追加
+            if (!empty($keyword)) {
+                $productsQuery->where('product_name', 'like', '%' . $keyword . '%');
+            }
+    
+            $products = $productsQuery->orderBy('is_sold')->latest()->get();
+        } elseif ($tab === 'favorites') {
+            if (auth()->check()) {
+                $favoritesQuery = Favorite::with('product')
                     ->where('user_id', auth()->id())
-                    ->whereHas('product', function ($query) {
+                    ->whereHas('product', function ($query) use ($keyword) {
                         $query->where('user_id', '!=', auth()->id());
-                    })
-                    ->get()
-                    ->pluck('product'); // Productだけ抽出してコレクションに
+    
+                        if (!empty($keyword)) {
+                            $query->where('product_name', 'like', '%' . $keyword . '%');
+                        }
+                    });
+    
+                $favorites = $favoritesQuery->get()->pluck('product');
             }
         }
-
-        return view('index', compact('tab', 'products', 'favorites'));
+    
+        return view('index', compact('tab', 'products', 'favorites', 'keyword'));
     }
+    
 }

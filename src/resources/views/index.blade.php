@@ -11,9 +11,16 @@
         <div style="color: red;">{{ session('status') }}</div>
     @endif
 
+    @php
+    $keyword = request('keyword');
+    @endphp
+
     <div class="tab-menu">
-        <a href="{{ route('tab.show', ['tab' => 'product']) }}" class="tab {{ $tab === 'product' ? 'active' : '' }}">おすすめ</a>
-        <a href="{{ route('tab.show', ['tab' => 'favorites']) }}" class="tab {{ $tab === 'favorites' ? 'active' : '' }}">マイリスト</a>
+    <a href="{{ route('tab.show', ['tab' => 'product', 'keyword' => $keyword]) }}"
+       class="tab {{ $tab === 'product' ? 'active' : '' }}">おすすめ</a>
+
+    <a href="{{ route('tab.show', ['tab' => 'favorites', 'keyword' => $keyword]) }}"
+       class="tab {{ $tab === 'favorites' ? 'active' : '' }}">マイリスト</a>
     </div>
 
     @if ($tab === 'favorites')

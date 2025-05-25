@@ -17,12 +17,15 @@
         </div>
     </div>
 
-    <div class="tabs">
-        <button class="tab-button active" data-target="selling">出品した商品</button>
-        <button class="tab-button" data-target="bought">購入した商品</button>
+    <div class="tab-menu">
+        <a href="{{ route('mypage', ['tab' => 'selling']) }}"
+           class="tab {{ $tab === 'selling' ? 'active' : '' }}">出品した商品</a>
+
+        <a href="{{ route('mypage', ['tab' => 'bought']) }}"
+           class="tab {{ $tab === 'bought' ? 'active' : '' }}">購入した商品</a>
     </div>
 
-    <div id="selling" class="tab-content active">
+    @if ($tab === 'selling')
         <div class="product-list">
             @foreach ($sellingProducts as $product)
                 <div class="product-item">
@@ -31,9 +34,7 @@
                 </div>
             @endforeach
         </div>
-    </div>
-
-    <div id="bought" class="tab-content">
+    @elseif ($tab === 'bought')
         <div class="product-list">
             @foreach ($boughtProducts as $product)
                 <div class="product-item">
@@ -42,21 +43,6 @@
                 </div>
             @endforeach
         </div>
-    </div>
+    @endif
 </div>
-
-<script>
-    const buttons = document.querySelectorAll('.tab-button');
-    const contents = document.querySelectorAll('.tab-content');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            buttons.forEach(btn => btn.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-
-            button.classList.add('active');
-            document.getElementById(button.dataset.target).classList.add('active');
-        });
-    });
-</script>
 @endsection

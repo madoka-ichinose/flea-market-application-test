@@ -9,22 +9,18 @@ use App\Models\Purchase;
 
 class MypageController extends Controller
 {
-    public function index()
-    {
-        $user = Auth::user();
-        
-        $sellingProducts = Product::where('user_id', $user->id)->get();
+    public function index(Request $request)
+{
+    $user = Auth::user();
+    $tab = $request->query('tab', 'selling'); // デフォルトは'selling'
 
-        $boughtProducts = Purchase::where('buyer_id', $user->id)
-            ->with('product')
-            ->get()
-            ->pluck('product')
-            ->filter();
+    $sellingProducts = Product::where('user_id', $user->id)->get();
 
-        return view('mypage', [
-            'user' => $user,
-            'sellingProducts' => $sellingProducts,
-            'boughtProducts' => $boughtProducts,
-        ]);
-    }
+    $boughtProducts = Purchase::with('product')
+        ->where('buyer_id', $user->id)
+        ->get()
+        ->pluck('product');
+
+    return view('mypage', compact('user', 'tab', 'sellingProducts', 'boughtProducts'));
+}
 }
