@@ -27,7 +27,7 @@
 - docker-compose exec php bash
 - composer -v
 - composer create-project "laravel/laravel=8.*" . --prefer-dist
-- fashionablylateディレクトリ上でsudo chmod -R 777 src/*を実行
+- flea-market-appディレクトリ上でsudo chmod -R 777 src/*を実行
 - app.php（'timezone' => 'Asia/Tokyo',）
 - php artisan tinker
 - echo Carbon\Carbon::now();
