@@ -84,13 +84,11 @@ class ProductTest extends TestCase
             $user = User::factory()->create();
             $otherUser = User::factory()->create();
     
-            // 検索にヒットする商品
             $matchingProduct = Product::factory()->create([
                 'user_id' => $otherUser->id,
                 'product_name' => 'Apple iPhone',
             ]);
     
-            // 検索にヒットしない商品
             $nonMatchingProduct = Product::factory()->create([
                 'user_id' => $otherUser->id,
                 'product_name' => 'Samsung Galaxy',
@@ -132,7 +130,6 @@ class ProductTest extends TestCase
         $response->assertSee('Awesome Product');
         $response->assertDontSee('Other Product');
     
-        // タブのアクティブ状態の確認（より信頼性高く）
         $this->assertStringContainsString(
             'class="tab active">マイリスト',
             $response->getContent()

@@ -39,7 +39,7 @@ class CommentTest extends TestCase
             'content' => '未ログインユーザーのコメント',
         ]);
 
-        $response->assertRedirect(route('login')); // ミドルウェアによるリダイレクト確認
+        $response->assertRedirect(route('login')); 
     }
 
     /** @test */

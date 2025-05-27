@@ -66,7 +66,7 @@ class RegisterTest extends TestCase
         $response = $this->post('/register', [
             'name' => 'テスト太郎',
             'email' => 'test@example.com',
-            'password' => 'short7', // 7文字
+            'password' => 'short7', 
             'password_confirmation' => 'short7',
         ]);
 
@@ -83,7 +83,7 @@ class RegisterTest extends TestCase
              'name' => 'テスト太郎',
              'email' => 'test@example.com',
              'password' => 'password123',
-             'password_confirmation' => 'different123', // 一致していない
+             'password_confirmation' => 'different123',
          ]);
  
          $response->assertSessionHasErrors(['password']);

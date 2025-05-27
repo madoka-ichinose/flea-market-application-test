@@ -45,7 +45,7 @@ class Product extends Model
 
     public function getIsSoldAttribute()
     {
-    // 購入レコードが1つでもあれば売却済みと判定
+    
     return $this->purchases()->exists();
     }
 

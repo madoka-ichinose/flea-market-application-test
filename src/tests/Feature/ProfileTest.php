@@ -27,7 +27,7 @@ class ProfileTest extends TestCase
         $response = $this->actingAs($user)->get('/mypage/profile');
         $response->assertStatus(200);
         $response->assertSee('テストユーザー');
-        $response->assertSee('test_profile.jpg'); // 画像のパス表示
+        $response->assertSee('test_profile.jpg');
         $response->assertSee('123-4567');
         $response->assertSee('テスト町');
         $response->assertSee('マンション101');

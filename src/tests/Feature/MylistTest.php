@@ -60,20 +60,17 @@ public function only_favorited_products_are_displayed_in_mylist()
     {
     $user = User::factory()->create();
 
-    $myProduct = Product::factory()->create(['user_id' => $user->id]); // 自分の商品
-    $otherProduct = Product::factory()->create(); // 他人の商品
+    $myProduct = Product::factory()->create(['user_id' => $user->id]); 
+    $otherProduct = Product::factory()->create(); 
 
-    // 他人の商品にだけいいね
     $user->favorites()->attach($otherProduct->id);
 
     $response = $this->actingAs($user)->get('/tab?tab=favorites');
 
     $response->assertStatus(200);
 
-    // 他人の商品は表示される
     $response->assertSee($otherProduct->product_name);
 
-    // 自分の商品は表示されない
     $response->assertDontSee($myProduct->product_name);
     }
 

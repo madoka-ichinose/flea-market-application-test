@@ -19,12 +19,10 @@ class TabController extends Controller
         if ($tab === 'product') {
             $productsQuery = Product::query();
     
-            // 自分の商品を除外
             if (auth()->check()) {
                 $productsQuery->where('user_id', '!=', auth()->id());
             }
     
-            // 検索キーワードがある場合のみ検索条件を追加
             if (!empty($keyword)) {
                 $productsQuery->where('product_name', 'like', '%' . $keyword . '%');
             }

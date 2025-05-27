@@ -17,7 +17,7 @@ class ProductDetailTest extends TestCase
     {
         $category1 = Category::factory()->create(['category_name' => 'ファッション']);
         $category2 = Category::factory()->create(['category_name' => '家電']);
-        // 商品を登録
+        
         $product = Product::factory()->create([
             'product_name' => 'Test Product',
             'brand' => 'Test Brand',
@@ -29,7 +29,6 @@ class ProductDetailTest extends TestCase
 
         $product->categories()->attach([$category1->id, $category2->id]);
 
-        // ユーザーとコメントを作成
         $user = User::factory()->create(['name' => 'Commenter']);
         Comment::factory()->create([
             'product_id' => $product->id,
@@ -37,27 +36,22 @@ class ProductDetailTest extends TestCase
             'content' => 'This is a test comment.',
         ]);
 
-        // お気に入りの数を1つにしておく
         $product->favorites()->attach($user->id);
 
-        // 商品詳細ページにアクセス
         $response = $this->get("/item/{$product->id}");
 
-        // 表示確認
         $response->assertStatus(200);
-        $response->assertSee('Test Product'); // 商品名
-        $response->assertSee('Test Brand'); // ブランド
-        $response->assertSee('¥12,345'); // 価格
-        $response->assertSee('This is a test product description.'); // 説明
+        $response->assertSee('Test Product'); 
+        $response->assertSee('Test Brand'); 
+        $response->assertSee('¥12,345'); 
+        $response->assertSee('This is a test product description.');
         $response->assertSee('ファッション');
         $response->assertSee('家電');
-        $response->assertSee('良好'); // 商品の状態
-        $response->assertSee('💬1'); // コメント数
-        $response->assertSee('Commenter'); // コメントユーザー名
-        $response->assertSee('This is a test comment.'); // コメント内容
-        $response->assertSee('test.jpg'); // 画像パス
-        $response->assertSee('1'); // いいね数（数値だけなので注意）
-
-        // 必要ならHTMLタグや特定構造もチェックできるが、より詳細なDOM検証には Laravel Dusk が便利です
+        $response->assertSee('良好'); 
+        $response->assertSee('💬1'); 
+        $response->assertSee('Commenter'); 
+        $response->assertSee('This is a test comment.');
+        $response->assertSee('test.jpg'); 
+        $response->assertSee('1'); 
     }
 }

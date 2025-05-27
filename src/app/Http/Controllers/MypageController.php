@@ -12,7 +12,7 @@ class MypageController extends Controller
     public function index(Request $request)
 {
     $user = Auth::user();
-    $tab = $request->query('tab', 'selling'); // デフォルトは'selling'
+    $tab = $request->query('tab', 'selling'); 
 
     $sellingProducts = Product::where('user_id', $user->id)->get();
 

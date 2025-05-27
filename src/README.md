@@ -44,14 +44,19 @@
 - products/create.blade.php（商品出品画面）
 - login.blade.php（ログイン画面）
 - register.blade.php（会員登録画面）
+- layouts/app.blade.php
 
 ## コントローラー設定  
 
 - docker-compose exec php bash
 - php artisan make:controller ProductController
-- php artisan make:controller PurchasePurchaseController
+- php artisan make:controller PurchaseController
 - php artisan make:controller MypageController
-- php artisan make:controller ProfileProfileController
+- php artisan make:controller ProfileController
+- php artisan make:controller TabController
+- php artisan make:controller CommentController
+- php artisan make:controller FavoriteController
+- php artisan make:controller Auth/RegisterdUserController
 - コントローラにそれぞれアクション追加
 - ルーティング設定（web.php）
 - php artisan key:generate
@@ -101,7 +106,7 @@
 - DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(ProductsTableSeeder::class);
 - php artisan db:seed
   
--  php artisan make:seeder UsersTableSeeder
+- php artisan make:seeder UsersTableSeeder
 - runメソッドにUserテーブルのシードを作成する処理を記載
 - DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(UsersTableSeeder::class);
 - php artisan db:seed

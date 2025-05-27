@@ -9,7 +9,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_name' => $this->faker->word, // または任意の固定文字列
+            'category_name' => $this->faker->word, 
         ];
     }
 }

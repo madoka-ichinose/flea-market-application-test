@@ -76,18 +76,15 @@ class LoginTest extends TestCase
     /** @test */
     public function user_can_logout()
     {
-        // ユーザー作成＆ログイン
+        
         $user = User::factory()->create();
 
         $this->actingAs($user);
 
-        // ログアウトリクエスト送信（通常はPOST）
         $response = $this->post('/logout');
 
-        // ログアウト後は未認証状態
         $this->assertGuest();
 
-        // ログアウト後のリダイレクト先を確認（通常は /login など）
         $response->assertRedirect('/');
     }
 }

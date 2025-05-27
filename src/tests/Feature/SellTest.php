@@ -23,7 +23,6 @@ class SellTest extends TestCase
 
     $user = User::factory()->create();
 
-    // ① カテゴリを作成（テスト用）
     $category = Category::factory()->create();
 
     $response = $this->actingAs($user)->get('/sell');
@@ -43,12 +42,11 @@ class SellTest extends TestCase
 
     $response = $this->post('/sell', $postData);
 
-    $response->assertRedirect('/mypage'); // 保存後のリダイレクト先を指定
+    $response->assertRedirect('/mypage'); 
     $this->assertDatabaseHas('products', [
         'product_name' => 'テスト商品',
     ]);
 
-    // ③ 中間テーブルに関連付けができているかチェック
     $product = Product::where('product_name', 'テスト商品')->first();
     $this->assertDatabaseHas('category_product', [
         'product_id' => $product->id,
