@@ -27,7 +27,7 @@
 - docker-compose exec php bash
 - composer -v
 - composer create-project "laravel/laravel=8.*" . --prefer-dist
-- fashionablylateディレクトリ上でsudo chmod -R 777 src/*を実行
+- flea-market-appディレクトリ上でsudo chmod -R 777 src/*を実行
 - app.php（'timezone' => 'Asia/Tokyo',）
 - php artisan tinker
 - echo Carbon\Carbon::now();
@@ -110,6 +110,35 @@
 - runメソッドにUserテーブルのシードを作成する処理を記載
 - DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(UsersTableSeeder::class);
 - php artisan db:seed
+
+## Fortify(ログイン認証)の導入
+
+- 下記のコマンドをPHPコンテナ内で実行
+- composer require laravel/fortify
+- php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+- php artisan migrate
+- config/app.phpファイルの以下２点の修正を行う
+- ローカルの変更：'locale' => 'ja',
+- サービスプロバイダの追加：+ App\Providers\FortifyServiceProvider::class,
+- FortifyServiceProvider.phpの修正
+- RouteServiceProvider.phpの修正
+
+## メール認証
+
+- App\Models\UserモデルにIlluminate\Contracts\Auth\MustVerifyEmailを実装
+- verification.noticeのルート設定
+- .envファイルの修正（MAIL_…の箇所）
+- RegisterdUserControllerの設定
+
+## テスト
+
+- database.phpの編集（データベースの設定）
+- .env.testingの作成（環境変数の設定）
+- テスト用データベースの作成（マイグレーションで作成）
+- phpunitファイルの編集（PHPのテスト用フレームワーク）
+- テストファイルの編集（テストに関する記述）
+- キャッシュクリア（php artisan config:clear）
+- テスト実行（vendor/bin/phpunit tests/Feature/〇〇Test.php）
 
 ## 使用技術(実行環境)  
   
