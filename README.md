@@ -30,12 +30,15 @@
 - composer create-project "laravel/laravel=8.*" . --prefer-dist
 - cp .env.example .env
 - .envファイルの設定（DB_HOST,DB_DATABASE,DB_USERNAME,DB_PASSWORDを編集し、MAIL_FROM_ADDRESSを設定、STRIPE_KEYとSTRIPE_SECRETを追記する）
+- php artisan key:generate
 - flea-market-application-testディレクトリ上でsudo chmod -R 777 src/*を実行
 - app.php（'timezone' => 'Asia/Tokyo',）
 - php artisan tinker
 - echo Carbon\Carbon::now();
+- php artisan migrate
+- php artisan db:seed(重複キー制約違反でエラーが出た場合は、開発環境であればphp artisan migrate:fresh --seedを実行してテーブルを削除＆再作成)
 
-## ビューの作成  
+## ビューの詳細  
 
 - index.blade.php(商品一覧のトップページ)
 - item.blade.php（商品詳細画面）
@@ -48,7 +51,7 @@
 - register.blade.php（会員登録画面）
 - layouts/app.blade.php
 
-## コントローラー設定  
+## コントローラー設定詳細  
 
 - docker-compose exec php bash
 - php artisan make:controller ProductController
@@ -63,7 +66,7 @@
 - ルーティング設定（web.php）
 - php artisan key:generate
   
-## テーブル作成（マイグレーション）  
+## テーブル作成（マイグレーション）詳細  
 
 - php artisan make:migration create_categories_table
 - マイグレーションファイルに記述追加（カラムの設定）
@@ -96,7 +99,7 @@
 - マイグレーションファイルに記述追加（カラムの設定）
 - php artisan migrate
 
-## シーティング  
+## シーティング詳細  
 
 - php artisan make:seeder CategoriesTableSeeder
 - runメソッドにCategoryテーブルのシードを作成する処理を記載
@@ -112,6 +115,14 @@
 - runメソッドにUserテーブルのシードを作成する処理を記載
 - DatabaseSeeder.phpを開き、runメソッドにシーダーを実行する処理を記載、$this->call(UsersTableSeeder::class);
 - php artisan db:seed
+
+## テスト詳細(PHPUnit)
+
+- database.phpの編集
+- .env.testingの作成
+- テスト用データベースの作成
+- phpunitファイルの編集
+- テストファイルの編集
 
 ## 使用技術(実行環境)  
   
