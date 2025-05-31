@@ -26,12 +26,14 @@
 
 - docker-compose exec php bash
 - composer -v
+- composer install
 - composer create-project "laravel/laravel=8.*" . --prefer-dist
-- flea-market-appディレクトリ上でsudo chmod -R 777 src/*を実行
+- cp .env.example .env
+- .envファイルの設定（DB_HOST,DB_DATABASE,DB_USERNAME,DB_PASSWORDを編集し、MAIL_FROM_ADDRESSを設定、STRIPE_KEYとSTRIPE_SECRETを追記する）
+- flea-market-application-testディレクトリ上でsudo chmod -R 777 src/*を実行
 - app.php（'timezone' => 'Asia/Tokyo',）
 - php artisan tinker
 - echo Carbon\Carbon::now();
-- .envファイルの設定
 
 ## ビューの作成  
 
@@ -122,6 +124,7 @@
 - Bladeテンプレートエンジン
 - Fortify
 - stripe/stripe-php
+- mailhog
 
 ## ER図  
 
