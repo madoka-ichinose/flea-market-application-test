@@ -10,11 +10,22 @@ services:
             - ./src:/var/www/
         depends_on:
             - php
+        networks:
+            - laravel
 
     php:
         build: ./docker/php
         volumes:
             - ./src:/var/www/
+        networks:
+            - laravel
+
+    mailhog:
+        image: mailhog/mailhog
+        ports:
+            - "8025:8025"
+        networks:
+            - laravel
 
     mysql:
         image: mysql:8.0.26
@@ -23,11 +34,12 @@ services:
             MYSQL_DATABASE: laravel_db
             MYSQL_USER: laravel_user
             MYSQL_PASSWORD: laravel_pass
-        command:
-            mysqld --default-authentication-plugin=mysql_native_password
+        command: mysqld --default-authentication-plugin=mysql_native_password
         volumes:
-            - ./docker/mysql/data:/var/lib/mysql
+            - mysql_data:/var/lib/mysql
             - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        networks:
+            - laravel
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -40,3 +52,13 @@ services:
             - mysql
         ports:
             - 8080:80
+        networks:
+            - laravel
+
+volumes:
+    mysql_data:
+
+
+networks:
+    laravel:
+        driver: bridge
